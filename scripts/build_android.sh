@@ -117,7 +117,7 @@ fi
 CMAKE_ARGS+=("-DBUILD_MOBILE_BENCHMARK=$BUILD_MOBILE_BENCHMARK")
 CMAKE_ARGS+=("-DBUILD_MOBILE_TEST=$BUILD_MOBILE_TEST")
 CMAKE_ARGS+=("-DBUILD_PYTHON=OFF")
-CMAKE_ARGS+=("-DBUILD_SHARED_LIBS=OFF")
+CMAKE_ARGS+=("-DBUILD_SHARED_LIBS=ON")
 if (( "${ANDROID_NDK_VERSION:-0}" < 18 )); then
   CMAKE_ARGS+=("-DANDROID_TOOLCHAIN=gcc")
 else
@@ -170,11 +170,22 @@ fi
 # Now, actually build the Android target.
 BUILD_ROOT=${BUILD_ROOT:-"$CAFFE2_ROOT/build_android"}
 INSTALL_PREFIX=${BUILD_ROOT}/install
+
+echo "*---------------------------------------------------------------"
+echo "CMAKE_ARGS:"
+for arg in "${CMAKE_ARGS[@]}"; do
+  echo "$arg"
+done
+echo "*---------------------------------------------------------------"
+
 mkdir -p $BUILD_ROOT
 cd $BUILD_ROOT
 cmake "$CAFFE2_ROOT" \
     -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX \
     -DCMAKE_BUILD_TYPE=Release \
+    -G Ninja \
+    -DCMAKE_C_COMPILER=C:/Users/Don/AppData/Local/Android/Sdk/ndk/21.3.6528147/toolchains/llvm/prebuilt/windows-x86_64/bin/clang.exe \
+    -DCMAKE_CXX_COMPILER=C:/Users/Don/AppData/Local/Android/Sdk/ndk/21.3.6528147/toolchains/llvm/prebuilt/windows-x86_64/bin/clang++.exe \
     "${CMAKE_ARGS[@]}"
 
 # Cross-platform parallel build

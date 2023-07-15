@@ -1,13 +1,17 @@
 apply plugin: 'com.android.library'
-apply plugin: 'maven'
+apply plugin: 'maven-publish'
 
 android {
-    compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion rootProject.buildToolsVersion
+    // compileSdkVersion rootProject.compileSdkVersion
+    // buildToolsVersion rootProject.buildToolsVersion
+    compileSdkVersion = 30
+    buildToolsVersion = 30
 
     defaultConfig {
-        minSdkVersion rootProject.minSdkVersion
-        targetSdkVersion rootProject.targetSdkVersion
+        // minSdkVersion rootProject.minSdkVersion
+        // targetSdkVersion rootProject.targetSdkVersion
+        minSdkVersion = 21
+        targetSdkVersion = 30
         versionCode 0
         versionName "0.1"
 
@@ -100,7 +104,8 @@ apply from: rootProject.file('gradle/release.gradle')
 
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
+    // classifier = 'sources'
+    archiveClassifier = 'sources'
 }
 
 def getLibtorchHeadersDir() {
